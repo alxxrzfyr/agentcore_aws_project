@@ -19,10 +19,10 @@
       "name": "gateway",
       "config": {
         "agentCoreGateway": {
-          "gatewayArn": "arn:aws:bedrock-agentcore:us-west-2:115805780657:gateway/agentcoreproject-workshop-gateway-mzqqvf7sgc",
+          "gatewayArn": "arn:aws:bedrock-agentcore:us-west-2:<ACCOUNT_ID>:gateway/<GATEWAY_ID>",
           "outboundAuth": {
             "oauth": {
-              "providerArn": "arn:aws:bedrock-agentcore:us-west-2:115805780657:token-vault/default/oauth2credentialprovider/workshop-gateway-cognito",
+              "providerArn": "arn:aws:bedrock-agentcore:us-west-2:<ACCOUNT_ID>:token-vault/default/oauth2credentialprovider/workshop-gateway-cognito",
               "scopes": [
                 "gateway/invoke"
               ]
