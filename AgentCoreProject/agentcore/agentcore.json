@@ -17,15 +17,15 @@
       "envVars": [
         {
           "name": "MEMORY_ID",
-          "value": "AgentCoreProject_CustomerAssistantMemory-9UwJ6x9YN7"
+          "value": "<MEMORY_ID>"
         },
         {
           "name": "GATEWAY_URL",
-          "value": "https://agentcoreproject-workshop-gateway-mzqqvf7sgc.gateway.bedrock-agentcore.us-west-2.amazonaws.com"
+          "value": "<GATEWAY_URL>"
         },
         {
           "name": "GATEWAY_CLIENT_ID",
-          "value": "5ksdu89p2e6ea6h2ts62ugsck6"
+          "value": "<GATEWAY_CLIENT_ID>"
         },
         {
           "name": "GATEWAY_CLIENT_SECRET",
@@ -33,7 +33,7 @@
         },
         {
           "name": "GATEWAY_TOKEN_ENDPOINT",
-          "value": "https://workshop-gw-9199.auth.us-west-2.amazoncognito.com/oauth2/token"
+          "value": "<GATEWAY_TOKEN_ENDPOINT>"
         },
         {
           "name": "GATEWAY_SCOPE",
@@ -63,7 +63,7 @@
     {
       "authorizerType": "OAuthCredentialProvider",
       "name": "workshop-gateway-cognito",
-      "discoveryUrl": "https://cognito-idp.us-west-2.amazonaws.com/us-west-2_4RJSTexeJ/.well-known/openid-configuration",
+      "discoveryUrl": "https://cognito-idp.us-west-2.amazonaws.com/<COGNITO_USER_POOL_ID>/.well-known/openid-configuration",
       "scopes": [
         "gateway/invoke"
       ],
@@ -82,7 +82,7 @@
           "name": "data-lookup",
           "targetType": "lambdaFunctionArn",
           "lambdaFunctionArn": {
-            "lambdaArn": "arn:aws:lambda:us-west-2:115805780657:function:workshop-data-lookup",
+            "lambdaArn": "arn:aws:lambda:us-west-2:<ACCOUNT_ID>:function:workshop-data-lookup",
             "toolSchemaFile": "./tool_specs/data_lookup.json"
           }
         },
@@ -90,7 +90,7 @@
           "name": "policy-retrieval",
           "targetType": "lambdaFunctionArn",
           "lambdaFunctionArn": {
-            "lambdaArn": "arn:aws:lambda:us-west-2:115805780657:function:workshop-policy-retrieval",
+            "lambdaArn": "arn:aws:lambda:us-west-2:<ACCOUNT_ID>:function:workshop-policy-retrieval",
             "toolSchemaFile": "./tool_specs/policy_retrieval.json"
           }
         },
@@ -98,7 +98,7 @@
           "name": "refund-target",
           "targetType": "lambdaFunctionArn",
           "lambdaFunctionArn": {
-            "lambdaArn": "arn:aws:lambda:us-west-2:115805780657:function:workshop-refund-processing",
+            "lambdaArn": "arn:aws:lambda:us-west-2:<ACCOUNT_ID>:function:workshop-refund-processing",
             "toolSchemaFile": "./tool_specs/refund_processing.json"
           }
         }
@@ -106,9 +106,9 @@
       "authorizerType": "CUSTOM_JWT",
       "authorizerConfiguration": {
         "customJwtAuthorizer": {
-          "discoveryUrl": "https://cognito-idp.us-west-2.amazonaws.com/us-west-2_4RJSTexeJ/.well-known/openid-configuration",
+          "discoveryUrl": "https://cognito-idp.us-west-2.amazonaws.com/<COGNITO_USER_POOL_ID>/.well-known/openid-configuration",
           "allowedClients": [
-            "5ksdu89p2e6ea6h2ts62ugsck6"
+            "<GATEWAY_CLIENT_ID>"
           ]
         }
       },
