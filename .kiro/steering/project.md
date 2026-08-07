@@ -59,7 +59,7 @@ This project builds a Returns & Refunds assistant using the Strands Agents SDK a
 - **Lab 2 Part 1 is COMPLETE.**
   - Scaffolded `AgentCoreProject/` with agent `CustomerAssistantAgent` (Strands, Python, Bedrock, CodeZip, HTTP).
   - Tested locally with `agentcore dev` (runtime on port 8082, endpoint `/invocations`).
-  - Deployed to AgentCore Runtime: `AgentCoreProject_CustomerAssistantAgent-SGvjcL9Z3r` in us-west-2.
+  - Deployed to AgentCore Runtime: `<RUNTIME_ID>` in us-west-2.
   - Invoked the cloud agent successfully with `agentcore invoke --prompt "..." --stream`.
   - Added AgentCore validation rules to steering.
 - **Lab 2 Part 2 is COMPLETE.**
@@ -69,7 +69,7 @@ This project builds a Returns & Refunds assistant using the Strands Agents SDK a
   - Tested locally and deployed. Both `order_lookup` and `policy_retrieval` confirmed working on the cloud agent.
 - **Lab 2 Part 3 is COMPLETE.**
   - Added `CustomerAssistantMemory` resource (USER_PREFERENCE strategy, 7-day expiry).
-  - Memory ID: `AgentCoreProject_CustomerAssistantMemory-9UwJ6x9YN7`.
+  - Memory ID: `<MEMORY_ID>`.
   - Integrated `AgentCoreMemorySessionManager` into main.py with `/users/{actor_id}/preferences/` namespace.
   - Updated `agentcore.json` with MEMORY_ID envVar (literal value) and `.env.local` for local dev.
   - Patched runtime IAM role with `MemoryNamespacePathFix` inline policy for `bedrock-agentcore:namespacePath`.
@@ -78,10 +78,10 @@ This project builds a Returns & Refunds assistant using the Strands Agents SDK a
   - Explored DynamoDB tables (workshop-customers, workshop-orders, workshop-products) and Knowledge Base (TVITUMHKVK).
   - Created and deployed Lambda functions: workshop-data-lookup (DynamoDB queries) and workshop-policy-retrieval (KB queries).
   - Created tool spec JSON files for the gateway.
-  - Created Cognito User Pool (us-west-2_4RJSTexeJ) with M2M client for gateway OAuth.
+  - Created Cognito User Pool (<COGNITO_USER_POOL_ID>) with M2M client for gateway OAuth.
   - Added AgentCore Gateway (workshop-gateway) with Custom JWT auth and 2 Lambda targets.
   - Replaced dummy tools with gateway MCP client. Agent now queries real DynamoDB and Knowledge Base.
-  - Gateway URL: https://agentcoreproject-workshop-gateway-mzqqvf7sgc.gateway.bedrock-agentcore.us-west-2.amazonaws.com
+  - Gateway URL: <GATEWAY_URL>
   - Tested both locally and deployed: C-02 orders + UK return policy confirmed working.
 - **Lab 2 Part 5 is COMPLETE.**
   - Created Cognito test user (administrator@example.com) and UI app client (USER_PASSWORD_AUTH).
