@@ -464,12 +464,18 @@ agentcore traces list
 ```bash
 cd streamlit-ui
 pip install streamlit boto3
+
+# Configure via environment variables (see .env.example)
+cp .env.example .env
+# Fill in COGNITO_USER_POOL_ID, COGNITO_UI_CLIENT_ID, AGENT_RUNTIME_ARN,
+# then export them into your shell before running.
+
 streamlit run streamlit_app.py
 ```
 
 The UI runs on `http://localhost:8501` and requires:
 - A Cognito user account (created via AWS Console or CLI)
-- The UI app client ID configured in `streamlit_app.py`
+- The environment variables from `.env.example` exported into the shell
 - Network access to the AgentCore Runtime endpoint
 
 ### UI Features
