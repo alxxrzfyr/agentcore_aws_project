@@ -6,15 +6,19 @@ The agent has access to DynamoDB (orders, customers, products), a Knowledge Base
 """
 
 import json
+import os
 import uuid
 import streamlit as st
 import boto3
 
 # --- Configuration ---
-AWS_REGION = "us-west-2"
-USER_POOL_ID = "us-west-2_4RJSTexeJ"
-UI_CLIENT_ID = "2lbfq7b54vlkibr6ut9j4s3mf4"
-AGENT_RUNTIME_ARN = "arn:aws:bedrock-agentcore:us-west-2:115805780657:runtime/AgentCoreProject_CustomerAssistantAgent-SGvjcL9Z3r"
+# All environment-specific values are read from environment variables so no
+# account identifiers or resource ARNs are hardcoded in source control.
+# Copy .env.example and export these before running the app.
+AWS_REGION = os.environ.get("AWS_REGION", "us-west-2")
+USER_POOL_ID = os.environ.get("COGNITO_USER_POOL_ID", "")
+UI_CLIENT_ID = os.environ.get("COGNITO_UI_CLIENT_ID", "")
+AGENT_RUNTIME_ARN = os.environ.get("AGENT_RUNTIME_ARN", "")
 
 WELCOME_MESSAGE = (
     "Hello! I'm your Returns & Refunds Assistant. I can help you look up orders, "
@@ -173,8 +177,8 @@ def show_login_page():
 
     # Normal login form
     with st.form("login_form"):
-        email = st.text_input("Email", value="administrator@example.com")
-        password = st.text_input("Password", type="password", value="Workshop2024!")
+        email = st.text_input("Email", placeholder="you@example.com")
+        password = st.text_input("Password", type="password")
         submitted = st.form_submit_button("Sign In")
 
         if submitted:
