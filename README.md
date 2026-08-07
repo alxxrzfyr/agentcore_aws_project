@@ -41,53 +41,55 @@ The agent is deployed to the AgentCore Runtime and accessed either through a Str
 
 ## Architecture
 
+```mermaid
+flowchart TB
+    User(["Administrator"])
+
+    subgraph Client["Client Layer"]
+        UI["Streamlit Chat UI<br/>streaming responses"]
+    end
+
+    Cognito["Amazon Cognito<br/>User Pool and OAuth"]
+
+    subgraph RT["AgentCore Runtime"]
+        Agent["CustomerAssistantAgent<br/>Strands SDK"]
+        Bedrock["Amazon Bedrock<br/>Claude Sonnet 4.5"]
+    end
+
+    Memory["AgentCore Memory<br/>USER_PREFERENCE strategy<br/>7-day TTL"]
+
+    subgraph GW["AgentCore Gateway MCP"]
+        Auth["Custom JWT Auth<br/>Cedar policy enforcement"]
+        DataLambda["data-lookup Lambda<br/>order, user, product"]
+        PolicyLambda["policy-retrieval Lambda<br/>RAG query"]
+        RefundLambda["refund-target Lambda<br/>process_refund"]
+    end
+
+    DDB[("DynamoDB<br/>customers, orders, products")]
+    KB[("Bedrock Knowledge Base<br/>US, UK, India policies")]
+
+    User --> UI
+    UI -->|USER_PASSWORD_AUTH| Cognito
+    UI -->|invoke with JWT| Agent
+    Agent -->|inference| Bedrock
+    Agent -->|read and write preferences| Memory
+    Agent -->|MCP over StreamableHTTP| Auth
+    Auth -->|client_credentials OAuth| Cognito
+    Auth --> DataLambda
+    Auth --> PolicyLambda
+    Auth --> RefundLambda
+    DataLambda --> DDB
+    PolicyLambda --> KB
 ```
-┌──────────────────────────────────────────────────────────────────┐
-│                        Streamlit Chat UI                          │
-│               (Cognito Auth + Streaming Responses)                │
-└──────────────────────┬───────────────────────────────────────────┘
-                       │
-                       ▼
-┌──────────────────────────────────────────────────────────────────┐
-│                   AgentCore Runtime (AWS)                         │
-│  ┌────────────────────────────────────────────────────────────┐  │
-│  │            CustomerAssistantAgent (Strands SDK)             │  │
-│  │  - Claude Sonnet 4.5 via Bedrock                           │  │
-│  │  - System Prompt (Returns & Refunds persona)               │  │
-│  │  - Session Manager (cross-session memory)                  │  │
-│  │  - MCP Client (gateway connectivity)                       │  │
-│  └────────────┬──────────────────────┬───────────────────────┘  │
-│               │                      │                           │
-│               ▼                      ▼                           │
-│  ┌────────────────────┐  ┌───────────────────────────────────┐  │
-│  │  AgentCore Memory  │  │     AgentCore Gateway (MCP)       │  │
-│  │  (User Preferences │  │  ┌────────────────────────────┐   │  │
-│  │   7-day retention) │  │  │ data-lookup (Lambda)       │   │  │
-│  │                    │  │  │  - order_lookup            │   │  │
-│  │  Namespace:        │  │  │  - user_lookup             │   │  │
-│  │  /users/{actorId}  │  │  │  - product_lookup          │   │  │
-│  │  /preferences      │  │  ├────────────────────────────┤   │  │
-│  └────────────────────┘  │  │ policy-retrieval (Lambda)  │   │  │
-│                          │  │  - policy_retrieval (RAG)   │   │  │
-│                          │  ├────────────────────────────┤   │  │
-│                          │  │ refund-target (Lambda)     │   │  │
-│                          │  │  - process_refund          │   │  │
-│                          │  └────────────────────────────┘   │  │
-│                          │                                    │  │
-│                          │  Auth: Custom JWT (Cognito)        │  │
-│                          │  Policies: Cedar (permit/forbid)   │  │
-│                          └────────────────────────────────────┘  │
-└──────────────────────────────────────────────────────────────────┘
-                       │                           │
-          ┌────────────┴────────────┐    ┌────────┴─────────────┐
-          │      DynamoDB           │    │  Bedrock Knowledge   │
-          │  ┌─────────────────┐    │    │  Base (TVITUMHKVK)   │
-          │  │workshop-customers│    │    │                      │
-          │  │workshop-orders   │    │    │  Return policies for │
-          │  │workshop-products │    │    │  US, UK, India across│
-          │  └─────────────────┘    │    │  all product categories│
-          └─────────────────────────┘    └──────────────────────┘
-```
+
+### Request Flow Summary
+
+1. The administrator interacts through the Streamlit UI, authenticated by Amazon Cognito.
+2. The UI invokes the AgentCore Runtime, where the Strands agent reasons with Claude Sonnet 4.5.
+3. The agent reads and writes user preferences to AgentCore Memory for cross-session recall.
+4. Tool calls flow through the AgentCore Gateway over MCP, gated by Custom JWT auth and Cedar policies.
+5. Gateway targets (Lambda functions) query DynamoDB and the Bedrock Knowledge Base, then stream results back to the UI.
+
 
 ## Features
 
