@@ -1,0 +1,15 @@
+[
+  {
+    "name": "process_refund",
+    "description": "Process a refund for a customer order. Requires order_id, amount in dollars, and a reason for the refund.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "order_id": {"type": "string", "description": "The order ID to refund (e.g., ORD-001)"},
+        "amount": {"type": "integer", "description": "Refund amount in dollars"},
+        "reason": {"type": "string", "description": "Reason for the refund"}
+      },
+      "required": ["order_id", "amount", "reason"]
+    }
+  }
+]
