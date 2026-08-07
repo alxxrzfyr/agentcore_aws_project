@@ -60,3 +60,6 @@ AgentCoreProject/agentcore/cdk/node_modules/
 AgentCoreProject/agentcore/.cli/logs/
 AgentCoreProject/agentcore/.cli/traces/
 AgentCoreProject/agentcore/.cli/eval-results/
+
+# Deployment state (contains resource ARNs and secret ARNs)
+AgentCoreProject/agentcore/.cli/deployed-state.json
