@@ -1,0 +1,60 @@
+# AI assistant directories
+.agents/
+.claude/
+.kiro/
+
+# Project metadata
+skills-lock.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets and local config
+*.env.local
+cognito_config.json
+
+# Lock files (large, regenerable)
+uv.lock
+
+# CDK build artifacts
+AgentCoreProject/agentcore/cdk/cdk.out/
+AgentCoreProject/agentcore/cdk/node_modules/
+
+# CLI internals (logs, traces, eval results)
+AgentCoreProject/agentcore/.cli/logs/
+AgentCoreProject/agentcore/.cli/traces/
+AgentCoreProject/agentcore/.cli/eval-results/
