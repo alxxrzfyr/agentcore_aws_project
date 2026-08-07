@@ -1,0 +1,16 @@
+[
+  {
+    "name": "policy_retrieval",
+    "description": "Retrieve return policy information from the Knowledge Base. Query with a natural language question about return policies for specific product categories or countries (US, UK, India).",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Natural language query about return policies (e.g., 'What is the return policy for electronics in India?')"
+        }
+      },
+      "required": ["query"]
+    }
+  }
+]
