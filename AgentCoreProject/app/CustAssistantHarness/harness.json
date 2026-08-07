@@ -1,0 +1,40 @@
+{
+  "name": "CustAssistantHarness",
+  "model": {
+    "provider": "bedrock",
+    "modelId": "us.anthropic.claude-sonnet-4-20250514-v1:0"
+  },
+  "systemPrompt": "You are a Returns & Refunds Assistant. You help administrators with:\n- Looking up customer orders and account information\n- Checking return eligibility for customer orders\n- Calculating refund amounts\n- Answering questions about return policies\n\nThe user is an administrator who can access all customer data.\nBe helpful and concise. Always confirm details before processing any return or refund.",
+  "tools": [
+    {
+      "type": "agentcore_browser",
+      "name": "browser"
+    },
+    {
+      "type": "agentcore_code_interpreter",
+      "name": "code-interpreter"
+    },
+    {
+      "type": "agentcore_gateway",
+      "name": "gateway",
+      "config": {
+        "agentCoreGateway": {
+          "gatewayArn": "arn:aws:bedrock-agentcore:us-west-2:115805780657:gateway/agentcoreproject-workshop-gateway-mzqqvf7sgc",
+          "outboundAuth": {
+            "oauth": {
+              "providerArn": "arn:aws:bedrock-agentcore:us-west-2:115805780657:token-vault/default/oauth2credentialprovider/workshop-gateway-cognito",
+              "scopes": [
+                "gateway/invoke"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "skills": [],
+  "memory": {
+    "mode": "existing",
+    "name": "CustomerAssistantMemory"
+  }
+}
