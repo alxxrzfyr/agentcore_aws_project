@@ -1,7 +1,9 @@
 # AI assistant directories
 .agents/
 .claude/
-.kiro/
+
+# Kiro skills symlinks (point to external paths)
+.kiro/skills/
 
 # Project metadata
 skills-lock.json
